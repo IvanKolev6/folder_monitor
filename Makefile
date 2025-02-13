@@ -1,38 +1,26 @@
-# Automatically determine the path to the docker executable
-DOCKER := $(shell which docker)
-
 # Variables
+DOCKER := $(shell which docker)
 IMAGE_NAME = folder_monitor_image
 EXECUTABLE = file_monitor
 SRC_DIR = /app/src
 BIN_DIR = /app/bin
+CONFIG_FILE = /app/config/config.json
 
-# Build the Docker image
+# Build Docker image
 build:
 	$(DOCKER) build -t $(IMAGE_NAME) .
 
-# Compile the C++ code inside Docker with the latest standard
+# Compile C++ Code
 compile:
 	$(DOCKER) run --rm -v "$(PWD)":/app $(IMAGE_NAME) bash -c "\
 		mkdir -p $(BIN_DIR) && \
-		g++ -std=gnu++23 -Wall -o $(BIN_DIR)/$(EXECUTABLE) $(SRC_DIR)/*.cpp"
+		g++ -std=gnu++23 -Wall -o $(BIN_DIR)/$(EXECUTABLE) $(SRC_DIR)/*.cpp $(SRC_DIR)/*.hpp"
 
-# Run the compiled program inside Docker
+# Run Program
 run:
-	$(DOCKER) run --rm -v "$(PWD)":/app $(IMAGE_NAME) bash -c "$(BIN_DIR)/$(EXECUTABLE)"
-
-# Watch for changes and rebuild automatically
-watch:
 	$(DOCKER) run --rm -v "$(PWD)":/app $(IMAGE_NAME) bash -c "\
-		mkdir -p $(BIN_DIR); \
-		while inotifywait -e modify $(SRC_DIR)/*.cpp; do \
-			echo 'Change detected. Recompiling...'; \
-			g++ -std=gnu++23 -Wall -o $(BIN_DIR)/$(EXECUTABLE) $(SRC_DIR)/*.cpp && $(BIN_DIR)/$(EXECUTABLE); \
-		done"
+		$(BIN_DIR)/$(EXECUTABLE) $(CONFIG_FILE)"
 
-# Clean build files inside the container
+# Clean
 clean:
 	$(DOCKER) run --rm -v "$(PWD)":/app $(IMAGE_NAME) bash -c "rm -rf $(BIN_DIR)"
-
-# Rebuild everything
-rebuild: clean build compile run

@@ -1,0 +1,6 @@
+{
+    "watch_folder": "./watch_folder",
+    "log_file": "./log.txt",
+    "delete_files": true
+  }
+  

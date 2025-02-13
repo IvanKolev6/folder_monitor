@@ -1,14 +1,17 @@
-# Use the GCC base image
 FROM gcc:latest
 
-# Install additional libraries
-RUN apt-get update && apt-get install -y make fswatch inotify-tools
+# Ensure system packages are updated before installing
+RUN apt-get update && apt-get upgrade -y && apt-get install -y \
+    make \
+    fswatch \
+    inotify-tools \
+    nlohmann-json3-dev 
 
-# Set the working directory
+# Set working directory
 WORKDIR /app
 
-# Copy the local source code to the container
+# Copy project files
 COPY . /app
 
-# Default command (can be overridden by Makefile)
-CMD ["make"]
+# Default command (optional)
+CMD ["/bin/bash"]
