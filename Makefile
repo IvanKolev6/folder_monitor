@@ -7,16 +7,15 @@ EXECUTABLE = file_monitor
 SRC_DIR = /app/src
 BIN_DIR = /app/bin
 
-# Common compile command (avoiding duplication)
-COMPILE_CMD = "mkdir -p $(BIN_DIR) && g++ -std=gnu++23 -Wall -o $(BIN_DIR)/$(EXECUTABLE) $(SRC_DIR)/*.cpp"
-
 # Build the Docker image
 build:
 	$(DOCKER) build -t $(IMAGE_NAME) .
 
-# Compile the C++ code inside Docker
+# Compile the C++ code inside Docker with the latest standard
 compile:
-	$(DOCKER) run --rm -v "$(PWD)":/app $(IMAGE_NAME) bash -c $(COMPILE_CMD)
+	$(DOCKER) run --rm -v "$(PWD)":/app $(IMAGE_NAME) bash -c "\
+		mkdir -p $(BIN_DIR) && \
+		g++ -std=gnu++23 -Wall -o $(BIN_DIR)/$(EXECUTABLE) $(SRC_DIR)/*.cpp"
 
 # Run the compiled program inside Docker
 run:
@@ -24,12 +23,11 @@ run:
 
 # Watch for changes and rebuild automatically
 watch:
-	$(DOCKER) run --rm -v "$(PWD)":/app $(IMAGE_NAME) bash -c " \
-		mkdir -p $(BIN_DIR) && \
+	$(DOCKER) run --rm -v "$(PWD)":/app $(IMAGE_NAME) bash -c "\
+		mkdir -p $(BIN_DIR); \
 		while inotifywait -e modify $(SRC_DIR)/*.cpp; do \
 			echo 'Change detected. Recompiling...'; \
-			g++ -std=gnu++23 -Wall -o $(BIN_DIR)/$(EXECUTABLE) $(SRC_DIR)/*.cpp && \
-			$(BIN_DIR)/$(EXECUTABLE); \
+			g++ -std=gnu++23 -Wall -o $(BIN_DIR)/$(EXECUTABLE) $(SRC_DIR)/*.cpp && $(BIN_DIR)/$(EXECUTABLE); \
 		done"
 
 # Clean build files inside the container
