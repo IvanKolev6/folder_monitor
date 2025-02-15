@@ -1,6 +1,10 @@
 {
     "watch_folder": "./watch_folder",
+    "api_base_url": "https://your-transfer-server/api/v1",
+    "username": "emmacurtis",
+    "password": "1a2B3cA1b2C3",
     "log_file": "./log.txt",
-    "delete_files": true
+    "delete_files": true,
+    "upload_strategy": "direct"
   }
   

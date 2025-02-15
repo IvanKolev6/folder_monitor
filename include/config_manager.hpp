@@ -5,8 +5,11 @@
 
 struct Config {
     std::string watch_folder;
+    std::string api_base_url;
+    std::string username;
+    std::string password;
     std::string log_file;
-    bool delete_files;
+    std::string upload_strategy; 
 };
 
 class ConfigManager {

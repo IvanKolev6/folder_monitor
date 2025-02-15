@@ -3,6 +3,7 @@ DOCKER := $(shell which docker)
 IMAGE_NAME = folder_monitor_image
 EXECUTABLE = file_monitor
 SRC_DIR = /app/src
+INCLUDE_DIR = /app/include
 BIN_DIR = /app/bin
 CONFIG_FILE = /app/config/config.json
 
@@ -14,7 +15,7 @@ build:
 compile:
 	$(DOCKER) run --rm -v "$(PWD)":/app $(IMAGE_NAME) bash -c "\
 		mkdir -p $(BIN_DIR) && \
-		g++ -std=gnu++23 -Wall -o $(BIN_DIR)/$(EXECUTABLE) $(SRC_DIR)/*.cpp $(SRC_DIR)/*.hpp"
+		g++ -std=gnu++23 -Wall -I./include -o $(BIN_DIR)/$(EXECUTABLE) $(SRC_DIR)/*.cpp $(INCLUDE_DIR)/*.hpp"
 
 # Run Program
 run:

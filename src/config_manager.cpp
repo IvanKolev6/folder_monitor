@@ -18,8 +18,11 @@ Config ConfigManager::loadConfig(const std::string& config_path) {
     file >> config_json;
 
     config.watch_folder = config_json["watch_folder"].get<std::string>();
+    config.api_base_url = config_json["api_base_url"].get<std::string>();
+    config.username = config_json["username"].get<std::string>();
+    config.password = config_json["password"].get<std::string>();
     config.log_file = config_json["log_file"].get<std::string>();
-    config.delete_files = config_json["delete_files"].get<bool>();
+    config.log_file = config_json["upload_strategy"].get<std::string>();
 
     std::cout << "Config Loaded: Watching " << config.watch_folder << std::endl;
 
