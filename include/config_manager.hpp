@@ -8,7 +8,6 @@ struct Config {
     std::string api_base_url;
     std::string username;
     std::string password;
-    std::string log_file;
     std::string upload_strategy; 
 };
 

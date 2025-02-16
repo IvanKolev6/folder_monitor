@@ -3,16 +3,15 @@ FROM gcc:latest
 # Ensure system packages are updated before installing
 RUN apt-get update && apt-get upgrade -y && apt-get install -y \
     make \
+    build-essential \ 
     fswatch \
     inotify-tools \
     nlohmann-json3-dev \
     wget \
     cmake \
-    libssl-dev \
+    libcurl4-openssl-dev \
+    curl \
     && rm -rf /var/lib/apt/lists/*
-
-# Download and install httplib (header-only)
-RUN wget -O /usr/local/include/httplib.h https://raw.githubusercontent.com/yhirose/cpp-httplib/master/httplib.h
 
 # Set working directory
 WORKDIR /app

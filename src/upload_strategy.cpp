@@ -1,6 +1,5 @@
 #include "upload_strategy.hpp"
 #include "direct_upload_strategy.hpp"
-#include "httplib.h"
 #include <fstream>
 #include <sstream>
 #include <iostream>

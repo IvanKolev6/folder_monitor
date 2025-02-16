@@ -1,16 +1,11 @@
 #include <iostream>
 #include <functional>
-
 #include "config_manager.hpp"
 #include "token_manager.hpp"
 #include "file_uploader.hpp"
 #include "upload_strategy.hpp"
 #include "directory_watcher.hpp"
-
-void handleNewFileFromWatcher(FileUploader& uploader, const std::string& file_path) {
-    uploader.handleNewFile(file_path); 
-}
-
+#include "file_handler.hpp"
 
 int main(int argc, char* argv[]) {
     if (argc < 2) {
@@ -33,7 +28,6 @@ int main(int argc, char* argv[]) {
     DirectoryWatcher watcher(config.watch_folder);
 
     watcher.startWatching(std::bind(handleNewFileFromWatcher, std::ref(uploader), std::placeholders::_1));
-    
 
     return 0;
 }

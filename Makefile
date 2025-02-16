@@ -15,7 +15,7 @@ build:
 compile:
 	$(DOCKER) run --rm -v "$(PWD)":/app $(IMAGE_NAME) bash -c "\
 		mkdir -p $(BIN_DIR) && \
-		g++ -std=gnu++23 -Wall -I./include -o $(BIN_DIR)/$(EXECUTABLE) $(SRC_DIR)/*.cpp $(INCLUDE_DIR)/*.hpp"
+		g++ -std=gnu++23 -Wall -I./include -o $(BIN_DIR)/$(EXECUTABLE) $(SRC_DIR)/*.cpp $(INCLUDE_DIR)/*.hpp -lcurl"
 
 # Run Program
 run:
