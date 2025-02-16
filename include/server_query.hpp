@@ -19,6 +19,7 @@ private:
     CURL* curl;
 
     static size_t WriteCallback(void* contents, size_t size, size_t nmemb, std::string* output);
+    std::string request(const std::string& endpoint, const std::string& method, const std::string& data, const std::string& token);
 };
 
 #endif // SERVER_QUERY_HPP

@@ -15,7 +15,7 @@ int main(int argc, char* argv[]) {
 
     Config config = ConfigManager::loadConfig(argv[1]);
 
-    TokenManager token_manager(config);
+    TokenManager token_manager(config); 
 
     std::unique_ptr<UploadStrategy> upload_strategy = UploadStrategy::create(config.upload_strategy, config.api_base_url);
     if (!upload_strategy) {

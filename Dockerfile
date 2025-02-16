@@ -7,8 +7,6 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
     fswatch \
     inotify-tools \
     nlohmann-json3-dev \
-    wget \
-    cmake \
     libcurl4-openssl-dev \
     curl \
     && rm -rf /var/lib/apt/lists/*

@@ -26,11 +26,13 @@ Config ConfigManager::loadConfig(const std::string& config_path) {
     }
 
     Config config;
-    config.watch_folder = config_json["watch_folder"].get<std::string>();
+    //config.watch_folder = config_json["watch_folder"].get<std::string>();
+    config.watch_folder = "/app/bin/watched_folder";
     config.api_base_url = config_json["api_base_url"].get<std::string>();
     config.username = config_json["username"].get<std::string>();
     config.password = config_json["password"].get<std::string>();
-    config.upload_strategy = config_json["upload_strategy"].get<std::string>();
+    //config.upload_strategy = config_json["upload_strategy"].get<std::string>();
+    config.upload_strategy = "direct";
 
     std::cout << "Config Loaded: Watching " << config.watch_folder << std::endl;
 

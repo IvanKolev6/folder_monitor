@@ -1,5 +1,6 @@
 #include "token_manager.hpp"
 #include "server_query.hpp"
+#include "endpoint_manager.hpp"
 #include <nlohmann/json.hpp>
 #include <iostream>
 #include <stdexcept>
@@ -8,13 +9,16 @@
 
 using json = nlohmann::json;
 
-TokenManager::TokenManager(const Config& cfg) : config(cfg), home_folder_id(-1), server_query(std::make_unique<ServerQuery>(cfg.api_base_url)) {
+TokenManager::TokenManager(const Config& cfg) 
+    : config(cfg), 
+      home_folder_id(-1), 
+      server_query(std::make_unique<ServerQuery>(cfg.api_base_url)) {
     authenticate();
     fetchUserInfo();
 }
 
 void TokenManager::authenticate() {
-    std::string endpoint = "/token";
+    std::string endpoint = EndpointManager::getToken();
     std::string post_fields = "grant_type=password&username=" + config.username + "&password=" + config.password;
 
     std::string response = server_query->post(endpoint, post_fields, "");
@@ -30,7 +34,7 @@ void TokenManager::authenticate() {
 }
 
 void TokenManager::fetchUserInfo() {
-    std::string endpoint = "/users/self";
+    std::string endpoint = EndpointManager::getUserInfo();
     std::string response = server_query->get(endpoint, access_token);
 
     auto json_response = json::parse(response);

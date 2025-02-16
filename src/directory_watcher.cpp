@@ -7,7 +7,12 @@
 
 namespace fs = std::filesystem;
 
-DirectoryWatcher::DirectoryWatcher(const std::string& path) : folder_path(path) {}
+DirectoryWatcher::DirectoryWatcher(const std::string& path) : folder_path(path) {
+    if (!fs::exists(folder_path)) {
+        std::cout << "Folder does not exist. Creating: " << folder_path << std::endl;
+        fs::create_directories(folder_path);
+    }
+}
 
 void DirectoryWatcher::startWatching(const std::function<void(const std::string&)>& onFileDetected) {
     std::set<std::string> known_files;

@@ -1,7 +1,5 @@
 {
-    "watch_folder": "path_for_your_watch_folder",
     "api_base_url": "https://your-api-server",
     "username": "your-username",
-    "password": "your-password",
-    "upload_strategy": "direct"
+    "password": "your-password"
 }
