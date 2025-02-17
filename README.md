@@ -25,7 +25,7 @@ To configure the application, you need to set your values in the `config.json` f
 
 ```json
 {
-    "api_base_url": "https://your-api-server",
+    "api_base_url": "https://your-api-server/api/v1",
     "username": "your-username",
     "password": "your-password",
 }
